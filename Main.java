@@ -53,29 +53,49 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         TVController controller = new TVController();
+        boolean exit = false;
 
-        System.out.println("Выберите тип телевизора:");
-        System.out.println("1. С пультом с кнопками");
-        System.out.println("2. С пультом с потенциометром");
-        int choice = scanner.nextInt();
+        while (!exit) {
+            System.out.println("Выберите действие:");
+            System.out.println("1. Выбрать тип телевизора");
+            System.out.println("2. Выйти");
+            int choice = scanner.nextInt();
 
-        if (choice == 1) {
-            controller.setIterator(new ButtonRemoteIterator());
-        } else if (choice == 2) {
-            controller.setIterator(new PotentiometerRemoteIterator());
-        }
+            switch (choice) {
+                case 1:
+                    System.out.println("Выберите тип телевизора:");
+                    System.out.println("1. С пультом с кнопками");
+                    System.out.println("2. С пультом с потенциометром");
+                    int tvChoice = scanner.nextInt();
 
-        while (true) {
-            System.out.println("Выберите команду:");
-            System.out.println("1. Следующий канал");
-            System.out.println("2. Предыдущий");
+                    if (tvChoice == 1) {
+                        controller.setIterator(new ButtonRemoteIterator());
+                    } else if (tvChoice == 2) {
+                        controller.setIterator(new PotentiometerRemoteIterator());
+                    }
 
-            int command = scanner.nextInt();
+                    while (true) {
+                        System.out.println("Выберите команду:");
+                        System.out.println("1. Следующий канал");
+                        System.out.println("2. Предыдущий");
+                        System.out.println("3. Выйти в предыдущее меню");
 
-            if (command == 1) {
-                controller.switchNextChannel();
-            } else if (command == 2) {
-                controller.switchPreviousChannel();
+                        int command = scanner.nextInt();
+
+                        if (command == 1) {
+                            controller.switchNextChannel();
+                        } else if (command == 2) {
+                            controller.switchPreviousChannel();
+                        } else if (command == 3) {
+                            break;
+                        }
+                    }
+                    break;
+                case 2:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Неверный ввод, попробуйте снова.");
             }
         }
     }
